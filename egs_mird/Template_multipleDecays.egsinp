@@ -10,9 +10,9 @@
 #-------------------------------------------------------------------------------
 :start media definition:
 	AE = 0.512 # Above Electron energy (MeV), defines the lower end cutoff for electron simulation
-	UE = 2.011 # Under Electron energy (MeV), defines the upper end cutoff for electron simulation
+	UE = 9.011 # Under Electron energy (MeV), defines the upper end cutoff for electron simulation
 	AP = 0.001 # Above Photon   energy (MeV), defines the lower end cutoff for photon   simulation
-	UP = 1.500 # Under Photon   energy (MeV), defines the upper end cutoff for photon   simulation
+	UP = 8.500 # Under Photon   energy (MeV), defines the upper end cutoff for photon   simulation
 
 	# WARNING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	# If you are using track length scoring, be sure
