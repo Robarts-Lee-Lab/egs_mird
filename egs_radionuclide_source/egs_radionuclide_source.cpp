@@ -41,16 +41,16 @@
 
 EGS_RadionuclideSource::EGS_RadionuclideSource(EGS_Input *input,
         EGS_ObjectFactory *f) : EGS_BaseSource(input,f),
-    baseSource(0), q_allowed(0), decays(0), activity(1), sCount (0) {
+    baseSource(0), q_allowed(0), decays(0), activity(1) {
 
     int err;
     vector<int> tmp_q;
     err = input->getInput("charge", tmp_q);
     if (!err) {
         if (std::find(q_allowed.begin(), q_allowed.end(), -1) != q_allowed.end()
-                && std::find(q_allowed.begin(), q_allowed.end(), 0) != q_allowed.end()
-                && std::find(q_allowed.begin(), q_allowed.end(), 1) != q_allowed.end()
-                && std::find(q_allowed.begin(), q_allowed.end(), 2) != q_allowed.end()
+			&& std::find(q_allowed.begin(), q_allowed.end(), 0) != q_allowed.end()
+			&& std::find(q_allowed.begin(), q_allowed.end(), 1) != q_allowed.end()
+			&& std::find(q_allowed.begin(), q_allowed.end(), 2) != q_allowed.end()
            ) {
             q_allowAll = true;
         }
@@ -69,6 +69,7 @@ EGS_RadionuclideSource::EGS_RadionuclideSource(EGS_Input *input,
 
     // Create the decay spectra
     count = 0;
+	sCount = 0;
     Emax = 0;
     unsigned int i = 0;
     EGS_Float spectrumWeightTotal = 0;
@@ -296,6 +297,7 @@ bool EGS_RadionuclideSource::storeState(ostream &data_out) const {
         }
     }
     egsStoreI64(data_out,count);
+    egsStoreI64(data_out,sCount);
 	baseSource->storeState(data_out);
 
     return true;
@@ -310,7 +312,9 @@ bool EGS_RadionuclideSource::addState(istream &data) {
     }
     EGS_I64 tmp_val;
     egsGetI64(data,tmp_val);
-    count = tmp_val;
+    count += tmp_val;
+    egsGetI64(data,tmp_val);
+    sCount += tmp_val;
 	baseSource->addState(data);
 
     return true;
@@ -322,6 +326,8 @@ void EGS_RadionuclideSource::resetCounter() {
     }
     ishower = 0;
     count = 0;
+	sCount = 0;
+	baseSource->resetCounter();
 }
 
 bool EGS_RadionuclideSource::setState(istream &data) {
@@ -331,6 +337,7 @@ bool EGS_RadionuclideSource::setState(istream &data) {
         }
     }
     egsGetI64(data,count);
+    egsGetI64(data,sCount);
 	baseSource->setState(data);
 
     return true;

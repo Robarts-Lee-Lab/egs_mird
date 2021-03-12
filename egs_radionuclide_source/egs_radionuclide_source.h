@@ -288,18 +288,17 @@ public:
 
     /*! \brief Destructor */
     ~EGS_RadionuclideSource() {		
-        if (baseSource)
+		if (baseSource)
 			if (!baseSource->deref()) {
 				delete baseSource;
 			}
 
-        for (vector<EGS_RadionuclideSpectrum * >::iterator it =
-                    decays.begin();
-                it!=decays.end(); it++) {
-            delete *it;
-            *it=0;
-        }
-        decays.clear();
+		for (vector<EGS_RadionuclideSpectrum * >::iterator it =
+			decays.begin(); it!=decays.end(); it++) {
+			delete *it;
+			*it=0;
+		}
+		decays.clear();
     };
 
     /*! \brief Gets the next particle from the radionuclide spectra */
@@ -314,7 +313,8 @@ public:
 
     /*! \brief Returns the current fluence (number of disintegrations) */
     EGS_Float getFluence() const {
-        return (ishower+1)*(baseSource->getFluence()/sCount); //!< Scale ishower+1 return by fluence ratio returned by file
+        return (ishower+1)*(baseSource->getFluence()/sCount);
+		//!< Scale ishower+1 return by fluence ratio returned by file
     };
 
     /*! \brief Returns the emission time of the most recent particle */
