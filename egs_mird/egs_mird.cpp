@@ -263,10 +263,10 @@ void egs_mird::outputResults() {
 	EGS_Float norm = MEV_TO_J*current_case/source->getFluence();
 	double sum, sum2;
 	
-	if ((run->getNdone()-run->getNcase())>10) // Only output files if we are within 10 hists
-		return;
-	
-	if (type == "3ddose") {
+	if (!final_job && output_file != final_output_file) {
+		// do nothing if we aren't fully finished the simulation
+	}
+	else if (type == "3ddose") {
 		output_3ddose();
 		egsInformation("3ddose file output at %s\n", fileName.c_str());
 		score->currentScore(nreg/2, sum, sum2);
